@@ -1,0 +1,16 @@
+fastapi==0.116.1
+uvicorn[standard]==0.35.0
+pydantic==2.11.7
+SQLAlchemy==2.0.43
+python-multipart==0.0.20
+psycopg[binary]==3.2.9
+httpx==0.28.1
+pytest==8.4.1
+pypdf==6.0.0
+alembic==1.20.0
+pytesseract==0.3.13
+Pillow==12.3.0
+pyzbar==0.1.9
+opencv-python-headless==5.0.0.93
+ImageHash==4.3.2
+numpy==2.5.3
