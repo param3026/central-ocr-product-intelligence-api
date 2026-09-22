@@ -107,6 +107,39 @@ Use the returned value as `Authorization: Bearer <TOKEN>` for protected endpoint
 - API-based product suggestion workflow: create, list, approve, reject, and add to the master.
 - Billing-ready product responses and audit records for protected operations.
 
+
+## Current status
+
+### Working and tested
+
+- Authentication and bearer tokens.
+- Product master creation and listing.
+- Basic duplicate prevention, barcode lookup, and weighted product matching.
+- Inventory updates, negative-stock protection, and invoice approval idempotency.
+- Billing-ready product responses and audit logging.
+- New-product suggestion creation, listing, approval, rejection, and duplicate prevention.
+- Upload type and upload-size validation.
+
+### Working but limited
+
+- Invoice OCR works mainly with text-based PDFs. Scanned invoices and complex table layouts need stronger OCR and table extraction.
+- Product image OCR works when Tesseract is installed, but field extraction is heuristic and requires review.
+- Barcode and QR decoding works when zbar, pyzbar, and OpenCV are installed; real-world code quality still affects results.
+- Document classification and lab-report extraction use local text and keyword heuristics.
+- Visual comparison uses perceptual image hashing; it is not advanced product, logo, or model recognition.
+- Product fields include batch and serial values, but they are not yet normalized into separate batch, serial, and inventory tables.
+
+### Not working yet or not production-ready
+
+- Automatic OCR-to-product-suggestion creation for unmatched invoice lines.
+- Reliable logo recognition, colour recognition, and advanced packaging recognition.
+- Authoritative GST/HSN validation and complete India tax/business-rule enforcement.
+- Web-based administration screen for review and approval.
+- ERP/POS connectors, background queues, multi-tenant scopes, pagination, request IDs, and production monitoring.
+- Full Alembic migration history for every core table; the MVP still bootstraps core tables through SQLAlchemy metadata.
+
+This is a tested MVP for local demonstration and integration work, not a complete production ERP/POS platform.
+
 ## Important endpoints
 
 | Method | Endpoint | Purpose |
@@ -173,16 +206,21 @@ The verified handoff run passes 10 tests covering authentication, product behavi
 
 ## Future work
 
-- Stronger table extraction and scanned/image-only invoice support.
-- Normalized batch, serial, and inventory tables.
-- Advanced logo, colour, and model-based visual recognition.
-- ERP/POS connectors, background jobs, scopes, pagination, request IDs, and structured production logs.
-- Web-based administration UI for review and approval.
+The following items are intentionally outside the completed MVP scope:
+
+- Stronger invoice table extraction and scanned/image-only invoice support.
+- Automatic creation of product suggestions from unmatched OCR invoice lines.
+- Normalized batch, serial, and inventory tables with full stock history.
+- Advanced logo, colour, packaging, and model-based visual recognition.
+- Authoritative GST/HSN validation and configurable India tax/business rules.
+- ERP/POS connectors, background jobs, tenant scopes, pagination, request IDs, and structured production logs.
+- Web-based administration UI for manual review and approval.
+- Full Alembic migration coverage, deployment hardening, TLS, secret management, and production monitoring.
 
 ## Handoff summary
 
 Available: a public, tested, local PostgreSQL-backed MVP with authentication, product master, invoice OCR foundation, image OCR and barcode providers, matching, inventory, billing, audit logging, document analysis, and API-based product approval.
 
-Updated: the README with a fast safe-install path, prerequisites, copy-paste commands, database details, verification, troubleshooting, safe operating notes, stop/reset instructions, endpoint reference, status notes, and future-work boundaries.
+Updated: the README with a fast safe-install path, prerequisites, copy-paste commands, database details, verification, troubleshooting, safe operating notes, working/limited/not-working status, endpoint reference, and an explicit future-work boundary.
 
 The repository is ready for a local boss demonstration and future ERP/POS integration.
